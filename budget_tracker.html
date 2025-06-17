@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personalized Budget Tracker</title>
+  <style>
+    /* To style the body's style, page and layout */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;	/*There is no space between two elements*/
+      padding: 0;	/*There is no space inside element*/
+      background-color: #f4f4f4; /*Lighter Background*/
+      color: #333;	/*Dark text color for better readibility*/
+    }
+
+    header {
+      background-color: #333;	/*Dark text color*/
+      color: white;	/*the heading in our header is white in colour*/
+      padding: 20px;
+      text-align: center;
+    }
+
+    main {
+      padding: 20px;	/*Space inside the elements*/
+      max-width: 800px;   /*Width will not exceed 800px, but height depends upon content*/               
+      margin:  auto;	/*Automatically centrally align the text andd the whole box in the center*/
+    }
+
+    section {
+      margin-bottom: 20px;/*Creates 20pixels space between current element and next element below it*/
+      padding: 20px;
+      background-color: #fff;	/*Bg colour is white*/
+      border-radius: 10px;	/*Round the borders of our section to 10 pixels*/
+      box-shadow: 8px 4px 5px rgba(0, 0, 0, 0.1);/*Veryyy faint black shadow*/
+
+/* 8 represents the shadow moves to the right of section
+   4 represents shadow moves downwards
+   6px makes the radius soft and spread out 
+   rgba stands for red, green, blue, alpha where alpha specifies the opacity/transparency*/
+    
+	}
+
+    h2 {
+      text-align: center;
+    }
+
+    .input-field {
+      margin-bottom: 15px;
+      display: flex; /*Flexbox is used to arrange items within a container, making it easier to align and distribute space between elements.*/
+      justify-content: space-between; /*Have space between items*/
+      align-items: center;	/*Align all the items in the center*/
+    }
+
+    label {
+      font-size: 16px; /* e.g: Enter your income */
+    }
+
+    input[type="number"], input[type="text"] /**/
+ {
+      padding: 10px;
+      width: 60%; /*Will take 60% width of parent container*/
+      font-size: 16px;
+      border-radius: 5px; /*Round the borders to 5pixels*/
+      border: 1px solid #ccc; /*Light gray border with 1px thickness*/
+    }
+
+    .button {
+      display: inline-block; /*It behaves like a block element in terms of styling but allows other blocks to be in the same row as well*/
+      background-color: #333; /*Dark gray color*/
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .button:hover {
+      background-color: #45a049; /*The button will turn green upon hovered on*/
+    }
+
+    .budget-summary {
+      margin-top: 30px; /*Create 30 pixels space between previous element and this element*/
+      background-color: #f8f8f8; /*light grayishh color*/
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .budget-summary p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+/* Styling for the "Go back" button */
+    .cta-button {
+      display: inline-block;
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      margin-top: 20px;
+    }
+
+    .cta-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Personalized Budget Tracker</h1>
+  </header>
+
+  <main>
+    <section>
+      <h2>Enter Your Income and Expenses</h2>
+      <form id="budget-form">
+        <!-- Income Section -->
+        <div class="input-field">
+          <label for="income">Monthly Income (Rs.):</label>
+          <input type="number" id="income" name="income" placeholder="Enter your income" required>
+        </div>
+
+        <!-- Expense Section -->
+        <div class="input-field">
+          <label for="expenses">Monthly Expenses (Rs.):</label>
+          <input type="number" id="expenses" name="expenses" placeholder="Enter your expenses" required>
+        </div>
+
+        <!-- Savings Goal Section -->
+        <div class="input-field">
+          <label for="savings">Monthly Savings Goal (Rs.):</label>
+          <input type="number" id="savings" name="savings" placeholder="Enter your savings goal" required>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="button">Calculate Budget</button>
+      </form>
+    </section>
+
+    <!-- Budget Summary -->
+    <section id="budget-summary" class="budget-summary" style="display: none;">
+      <h2>Your Budget Summary</h2>
+      <p><strong>Income:</strong> Rs.<span id="summary-income"></span></p>
+      <p><strong>Expenses:</strong> Rs.<span id="summary-expenses"></span></p>
+      <p><strong>Savings Goal:</strong> Rs.<span id="summary-savings"></span></p>
+      <p><strong>Remaining Budget:</strong> Rs.<span id="remaining-budget"></span></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Budget Tracker. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Budget Tracker JavaScript
+    document.getElementById('budget-form').addEventListener('submit', function(event) {
+      event.preventDefault();  // Prevent form from submitting
+
+      // Get values from form
+      const income = parseFloat(document.getElementById('income').value); //Parse float converts user input into a floating value
+      const expenses = parseFloat(document.getElementById('expenses').value);
+      const savings = parseFloat(document.getElementById('savings').value);
+
+      // Calculate remaining budget
+      const remainingBudget = income - expenses - savings;
+
+      // Update the summary section
+      document.getElementById('summary-income').textContent = income.toFixed(2);
+      document.getElementById('summary-expenses').textContent = expenses.toFixed(2);
+      document.getElementById('summary-savings').textContent = savings.toFixed(2);
+      document.getElementById('remaining-budget').textContent = remainingBudget.toFixed(2);
+
+      // Show the budget summary section
+      document.getElementById('budget-summary').style.display = 'block';
+    });
+  </script>
+	<a href="index.html" class="cta-button">Go back to main page</a>
+      <p>--------------------------------------------------</p>
+      <p>--------------------------------------------------</p>
+      <p>--------------------------------------------------</p>
+</body>
+</html>

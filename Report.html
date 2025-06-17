@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Fraud</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Report Fraud or Suspicious Activity</h1>
+    <nav>
+      <ul>
+        <li><a href="fraud_detection_website.html">Home</a></li>
+        <li><a href="report.html">Report Fraud</a></li>
+        <li><a href="tips.html">Fraud Prevention Tips</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <form action="Submitted_response.html" method="GET">
+      <label for="fraud-type">Type of Fraud:</label>
+      <select id="fraud-type" name="fraud-type" required>
+        <option value="Phishing Scam">Phishing</option>
+        <option value="Lottery/Prize Scam">Lottery/Prize Scam</option>
+        <option value="Investment Scam">Investment Scam</option>
+        <option value="Fake Invoice Scam">Fake Invoice Scam</option>
+        <option value="Loan Scam">Loan Scam</option>
+        <option value="Online Shopping Scam">Online Shopping Scam</option>
+        <option value="Fake Charity Scam">Fake Charity Scam</option>
+      </select>
+
+      <label for="description">Description of Fraud:</label>
+      <textarea id="description" name="description" required></textarea>
+
+      <button type="submit">Submit Report</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>Contact us at: info@frauddetection.com</p>
+  </footer>
+</body>
+</html>
